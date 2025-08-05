@@ -13,11 +13,11 @@ export async function activate(context: vscode.ExtensionContext) {
     let Knit = settings.get<boolean>("Knit") ?? true;
 
     // React to setting changes
-    vscode.workspace.onDidChangeConfiguration(event => {
+    vscode.workspace.onDidChangeConfiguration(e => {
         (async () => {
             if (
-                event.affectsConfiguration("Settings.type") ||
-                event.affectsConfiguration("Settings.Knit")
+                e.affectsConfiguration("Settings.type") ||
+                e.affectsConfiguration("Settings.Knit")
             ) {
                 // Re-fetch updated settings
                 const updatedSettings = vscode.workspace.getConfiguration("Settings");
@@ -31,31 +31,31 @@ export async function activate(context: vscode.ExtensionContext) {
     await vscode.commands.executeCommand('setContext', 'ext.menuKnit.enable', Knit);
     // Register commands for each file type
     const moduleScriptCommand = vscode.commands.registerCommand('extension.ModuleScript', async (uri: vscode.Uri) => {
-        await createFileFromTemplate(fileTemplates['ModuleScript'], uri, extension);
+        await createFileFromTemplate(fileTemplates['ModuleScript'], extension, uri);
     });
 
     const clientCommand = vscode.commands.registerCommand('extension.Client', async (uri: vscode.Uri) => {
-        await createFileFromTemplate(fileTemplates['Client'], uri, extension);
+        await createFileFromTemplate(fileTemplates['Client'], extension, uri);
     });
 
     const serverCommand = vscode.commands.registerCommand('extension.Server', async (uri: vscode.Uri) => {
-        await createFileFromTemplate(fileTemplates['Server'], uri, extension);
+        await createFileFromTemplate(fileTemplates['Server'], extension, uri);
     });
 
-    const knitController = vscode.commands.registerCommand('extension.KnitController', async (uri: vscode.Uri) => {
-        await createFileFromTemplate(fileTemplates['Knit']["Controller"], uri, extension);
+    const knitControllerCommand = vscode.commands.registerCommand('extension.KnitController', async (uri: vscode.Uri) => {
+        await createFileFromTemplate(fileTemplates['Knit']["Controller"], extension, uri);
     });
 
-    const knitService = vscode.commands.registerCommand('extension.KnitService', async (uri: vscode.Uri) => {
-        await createFileFromTemplate(fileTemplates['Knit']["Service"], uri, extension);
+    const knitServiceCommand = vscode.commands.registerCommand('extension.KnitService', async (uri: vscode.Uri) => {
+        await createFileFromTemplate(fileTemplates['Knit']["Service"], extension, uri);
     });
 
     context.subscriptions.push(
         moduleScriptCommand,
         clientCommand,
         serverCommand,
-        knitController,
-        knitService
+        knitControllerCommand,
+        knitServiceCommand
     );
 
     context.subscriptions.push({
@@ -67,7 +67,7 @@ export async function activate(context: vscode.ExtensionContext) {
     });
 }
 
-async function createFileFromTemplate(template: FileTemplate, uri?: vscode.Uri, extension?: string) {
+async function createFileFromTemplate(template: FileTemplate, extension: string, uri?: vscode.Uri) {
     try {
         // Determine the target directory
         let targetDir: string;
@@ -89,8 +89,7 @@ async function createFileFromTemplate(template: FileTemplate, uri?: vscode.Uri, 
 
         if (template.name === 'Controller' || template.name === 'Service') {
             // For Knit files, select only the "Name" part
-            const suffix = template.name === 'Controller' ? 'Controller' : 'Service';
-            defaultName = `Name${suffix}${extension}`.trim();
+            defaultName = `Name${template.name}${extension}`.trim();
             selectionStart = 0;
             selectionEnd = 4; // Length of "Name"
         } else if (template.name === 'LocalScript' || template.name === 'Script') {
@@ -103,7 +102,7 @@ async function createFileFromTemplate(template: FileTemplate, uri?: vscode.Uri, 
             // For other files, select everything except the extension
             defaultName = `${template.name}${extension}`.trim();
             selectionStart = 0;
-            // @ts-ignore
+
             selectionEnd = defaultName.length - extension.length;
         }
 

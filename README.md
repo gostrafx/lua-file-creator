@@ -18,7 +18,7 @@
 - Simple templates included for quick file creation
 - Works with `.lua`, `.luau`, or any custom extension
 
-![Demo](images/feature-x.png) <!-- Replace with actual GIF or image if available -->
+![Demo](https://i.imgur.com/nK0thGo.gif) <!-- Replace with actual GIF or image if available -->
 
 ---
 
@@ -80,6 +80,7 @@ You can trigger these commands via the Command Palette (`Ctrl+Shift+P` / `Cmd+Sh
 - Improved validation for Knit file names
 - Added intelligent file naming and incrementing
 - Enabled setting changes to take effect live
+
 ---
 
 ## 📚 Resources

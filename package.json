@@ -2,7 +2,7 @@
   "name": "lua-file-creator",
   "displayName": "Luau/Lua File Type",
   "description": "Quickly create Lua or Luau files with your preferred file extension and optional Knit framework support.",
-  "publisher": "GOSTRA FX",
+  "publisher": "GOSTRAFX",
   "version": "1.0.0",
   "engines": {
     "vscode": "^1.102.0"
