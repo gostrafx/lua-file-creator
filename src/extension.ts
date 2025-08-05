@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
-import {fileTemplates,FileTemplate} from './templates';
-
+import { FileTemplate, fileTemplates } from './templates';
 
 export async function activate(context: vscode.ExtensionContext) {
     console.log('Lua File Creator extension is now active');
@@ -91,14 +90,19 @@ async function createFileFromTemplate(template: FileTemplate, uri?: vscode.Uri, 
         if (template.name === 'Controller' || template.name === 'Service') {
             // For Knit files, select only the "Name" part
             const suffix = template.name === 'Controller' ? 'Controller' : 'Service';
-            defaultName = `Name${suffix}${extension}`;
+            defaultName = `Name${suffix}${extension}`.trim();
             selectionStart = 0;
             selectionEnd = 4; // Length of "Name"
+        } else if (template.name === 'LocalScript' || template.name === 'Script') {
+            const suffix = template.name === 'LocalScript' ? '.Client' : '.Server';
+            defaultName = `${template.name}${suffix}${extension}`.trim();
+            selectionStart = 0;
+            selectionEnd = defaultName.split(".")[0].length; // Length of "Name"
+
         } else {
             // For other files, select everything except the extension
-            defaultName = `${template.name}${extension}`;
+            defaultName = `${template.name}${extension}`.trim();
             selectionStart = 0;
-
             // @ts-ignore
             selectionEnd = defaultName.length - extension.length;
         }
@@ -106,30 +110,14 @@ async function createFileFromTemplate(template: FileTemplate, uri?: vscode.Uri, 
         // Prompt for filename with valueSelection for easy editing
         const fileName = await vscode.window.showInputBox({
             prompt: `Enter the name for your ${template.name}`,
-            value: defaultName,
+            value: defaultName.trim(),
             valueSelection: [selectionStart, selectionEnd],
             validateInput: (value: string) => {
                 if (!value || value.trim() === '') {
                     return 'Filename cannot be empty';
                 }
-                if (!/^[a-zA-Z0-9._-]+$/.test(value)) {
+                if (!/^[a-zA-Z0-9._\- ]+$/.test(value)) {
                     return 'Filename contains invalid characters';
-                }
-
-                // Special validation for Knit files
-                if (template.name === 'NameController' || template.name === 'NameService') {
-
-                    const withoutExtension = value.replace(<string>extension, '');
-                    const suffix = template.name === 'NameController' ? 'Controller' : 'Service';
-
-                    if (!withoutExtension.endsWith(suffix)) {
-                        return `Filename must end with "${suffix}"`;
-                    }
-
-                    const namepart = withoutExtension.replace(suffix, '');
-                    if (!namepart || namepart.trim() === '') {
-                        return `Please provide a name before "${suffix}"`;
-                    }
                 }
 
                 return null;
@@ -161,6 +149,16 @@ async function createFileFromTemplate(template: FileTemplate, uri?: vscode.Uri, 
             // Special handling for Knit files to increment the name part only
             if (template.name === 'Controller' || template.name === 'Service') {
                 const suffix = template.name === 'Controller' ? 'Controller' : 'Service';
+                const nameplate = baseName.replace(suffix, '');
+
+                do {
+                    const incrementedName = `${nameplate}${counter}${suffix}`;
+                    finalFileNameToUse = `${incrementedName}${extension}`;
+                    finalFilePath = path.join(targetDir, finalFileNameToUse);
+                    counter++;
+                } while (fs.existsSync(finalFilePath));
+            } else if (template.name === 'LocalScript' || template.name === 'Script') {
+                const suffix = template.name === 'LocalScript' ? '.Client' : '.Server';
                 const nameplate = baseName.replace(suffix, '');
 
                 do {
