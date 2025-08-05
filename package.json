@@ -1,0 +1,147 @@
+{
+  "name": "lua-file-creator",
+  "displayName": "Luau/Lua File Type",
+  "description": "Quickly create Lua or Luau files with your preferred file extension and optional Knit framework support.",
+  "publisher": "GOSTRA FX",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": [
+    "roblox",
+    "lua",
+    "luau",
+    "vscode",
+    "extension",
+    "gamedev",
+    "Knit Roblox",
+    "Knit",
+    "Roblox LSP"
+  ],
+  "activationEvents": [
+    "onCommand:extension.ModuleScript",
+    "onCommand:extension.Client",
+    "onCommand:extension.Server",
+    "onCommand:extension.KnitController",
+    "onCommand:extension.KnitService",
+    "*"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "luaFileCreator",
+      "properties": {
+        "Settings.Knit": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables the Knit framework for Roblox."
+        },
+        "Settings.type": {
+          "type": "string",
+          "enum": [
+            ".Luau",
+            ".lua"
+          ],
+          "default": ".Luau",
+          "description": "Lua file extension type."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.ModuleScript",
+        "title": "ModuleScript"
+      },
+      {
+        "command": "extension.Client",
+        "title": "Client"
+      },
+      {
+        "command": "extension.Server",
+        "title": "Server"
+      },
+      {
+        "command": "extension.KnitController",
+        "title": "Knit Controller"
+      },
+      {
+        "command": "extension.KnitService",
+        "title": "Knit Service"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "newFile",
+        "label": "New File Lua"
+      },
+      {
+        "id": "knit",
+        "label": "Knit"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "group": "navigation@-10000",
+          "when": "ext.menu.enable && explorerResourceIsFolder",
+          "title": "New File Lua",
+          "submenu": "newFile"
+        }
+      ],
+      "newFile": [
+        {
+          "submenu": "knit",
+          "group": "navigation@1",
+          "when": "ext.menuKnit.enable"
+        },
+        {
+          "command": "extension.Client",
+          "group": "navigation@2"
+        },
+        {
+          "command": "extension.Server",
+          "group": "navigation@3"
+        },
+        {
+          "command": "extension.ModuleScript",
+          "group": "navigation@4"
+        }
+      ],
+      "knit": [
+        {
+          "command": "extension.KnitController",
+          "group": "navigation@1"
+        },
+        {
+          "command": "extension.KnitService",
+          "group": "navigation@2"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.102.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
