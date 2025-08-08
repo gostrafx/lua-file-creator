@@ -29,14 +29,14 @@
   "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
-      "title": "luaFileCreator",
+      "title": "lua File Creator",
       "properties": {
-        "Settings.Knit": {
+        "luafilecreator.Settings.Knit": {
           "type": "boolean",
           "default": true,
           "description": "Enables the Knit framework for Roblox."
         },
-        "Settings.type": {
+        "luafilecreator.Settings.type": {
           "type": "string",
           "enum": [
             ".Luau",

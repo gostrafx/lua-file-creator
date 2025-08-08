@@ -8,7 +8,7 @@ export async function activate(context: vscode.ExtensionContext) {
     await vscode.commands.executeCommand('setContext', 'ext.menu.enable', true);
 
     // Initial config fetch
-    let settings = vscode.workspace.getConfiguration("Settings");
+    let settings = vscode.workspace.getConfiguration("luafilecreator.Settings");
     let extension = settings.get<string>("type") ?? '.luau';
     let Knit = settings.get<boolean>("Knit") ?? true;
 
@@ -16,11 +16,11 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidChangeConfiguration(e => {
         (async () => {
             if (
-                e.affectsConfiguration("Settings.type") ||
-                e.affectsConfiguration("Settings.Knit")
+                e.affectsConfiguration("luafilecreator.Settings.type") ||
+                e.affectsConfiguration("luafilecreator.Settings.Knit")
             ) {
                 // Re-fetch updated settings
-                const updatedSettings = vscode.workspace.getConfiguration("Settings");
+                const updatedSettings = vscode.workspace.getConfiguration("luafilecreator.Settings");
                 extension = updatedSettings.get<string>("type") ?? '.luau';
                 const updatedKnit = updatedSettings.get<boolean>("Knit") ?? true;
                 await vscode.commands.executeCommand('setContext', 'ext.menuKnit.enable', updatedKnit);
