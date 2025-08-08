@@ -93,7 +93,7 @@ async function createFileFromTemplate(template: FileTemplate, extension: string,
             selectionStart = 0;
             selectionEnd = 4; // Length of "Name"
         } else if (template.name === 'LocalScript' || template.name === 'Script') {
-            const suffix = template.name === 'LocalScript' ? '.Client' : '.Server';
+            const suffix = template.name === 'LocalScript' ? '.client' : '.server';
             defaultName = `${template.name}${suffix}${extension}`.trim();
             selectionStart = 0;
             selectionEnd = defaultName.split(".")[0].length; // Length of "Name"
@@ -157,7 +157,7 @@ async function createFileFromTemplate(template: FileTemplate, extension: string,
                     counter++;
                 } while (fs.existsSync(finalFilePath));
             } else if (template.name === 'LocalScript' || template.name === 'Script') {
-                const suffix = template.name === 'LocalScript' ? '.Client' : '.Server';
+                const suffix = template.name === 'LocalScript' ? '.client' : '.server';
                 const nameplate = baseName.replace(suffix, '');
 
                 do {
