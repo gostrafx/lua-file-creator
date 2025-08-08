@@ -86,3 +86,7 @@ You can trigger these commands via the Command Palette (`Ctrl+Shift+P` / `Cmd+Sh
 ## ✨ Enjoy Using Lua File Creator?
 
 Leave a ⭐ on the [GitHub repo](https://github.com/gostrafx/lua-file-creator) (if public) or share it with fellow Lua developers!
+
+## ☕ Support the Project
+
+If you find this extension helpful and want to support its development, you can [**Buy Me a Coffee**](https://streamelements.com/gostrafx/tip) — every bit of support helps keep the updates coming!
