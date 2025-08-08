@@ -18,7 +18,9 @@
   },
   "pricing": "Free",
   "categories": [
-    "roblox",
+    "Other"
+  ],
+  "keywords": [
     "lua",
     "luau",
     "vscode",
