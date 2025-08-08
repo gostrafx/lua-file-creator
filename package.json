@@ -7,7 +7,7 @@
   "author": {
     "name": "GOSTRAFX"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "engines": {
     "vscode": "^1.102.0"
   },
@@ -51,7 +51,7 @@
         "luafilecreator.Settings.type": {
           "type": "string",
           "enum": [
-            ".Luau",
+            ".luau",
             ".lua"
           ],
           "default": ".Luau",
