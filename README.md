@@ -33,15 +33,15 @@
 
 This extension contributes the following settings under `Settings` in your `settings.json`:
 
-| Setting             | Type     | Description                                    |
-|---------------------|----------|------------------------------------------------|
-| `Settings.type`     | `string` | File extension to use (e.g., `.lua`, `.luau`) |
-| `Settings.Knit`     | `boolean`| Enable/disable Knit-specific file types       |
+| Setting                        | Type     | Description                                    |
+|--------------------------------|----------|------------------------------------------------|
+| `luafilecreator.Settings.type` | `string` | File extension to use (e.g., `.lua`, `.luau`) |
+| `luafilecreator.Settings.Knit` | `boolean`| Enable/disable Knit-specific file types       |
 
 Example:
 ```json
 {
-  "Settings": {
+  "luafilecreator.Settings": {
     "type": ".luau",
     "Knit": true
   }
@@ -83,14 +83,6 @@ You can trigger these commands via the Command Palette (`Ctrl+Shift+P` / `Cmd+Sh
 
 ---
 
-## 📚 Resources
-
-- [VS Code Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-- [Roblox Knit Framework](https://github.com/Sleitnick/Knit)
-- [Markdown Reference](https://www.markdownguide.org/basic-syntax/)
-
----
-
 ## ✨ Enjoy Using Lua File Creator?
 
-Leave a ⭐ on the [GitHub repo](https://github.com/your-repo-url) (if public) or share it with fellow Lua developers!
+Leave a ⭐ on the [GitHub repo](https://github.com/gostrafx/lua-file-creator) (if public) or share it with fellow Lua developers!
