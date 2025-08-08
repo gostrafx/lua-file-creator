@@ -2,11 +2,21 @@
   "name": "lua-file-creator",
   "displayName": "Luau/Lua File Type",
   "description": "Quickly create Lua or Luau files with your preferred file extension and optional Knit framework support.",
+  "homepage": "https://github.com/gostrafx/lua-file-creator/blob/master/README.md",
   "publisher": "GOSTRAFX",
+  "author": {
+    "name": "GOSTRAFX"
+  },
   "version": "1.0.0",
   "engines": {
     "vscode": "^1.102.0"
   },
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#21214c",
+    "theme": "dark"
+  },
+  "pricing": "Free",
   "categories": [
     "roblox",
     "lua",
